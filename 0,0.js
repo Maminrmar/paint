@@ -60,10 +60,10 @@ function doSingle() {
             "get":true
         }
         , success: function(result){
-    $("#div1").html(result);
+    gd = result;
   }}
   );
-  const diff = JSON.parse(diff)
+  const diff = JSON.parse(gd)
     const randomized = diff.sort(() => Math.random() - 0.5)[0];
     if (randomized) {
         setPixelColor(randomized.x + destPosition.x, randomized.y + destPosition.y, randomized.expectedCell);
