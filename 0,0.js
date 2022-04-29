@@ -51,24 +51,87 @@ function put() {
 }
 
 function doSingle() {
-    //const src = getBoardFromXY(destPosition.x, destPosition.y, destBoard[0]?.length || 0, destBoard.length)
-    const diff = "";
+    /*const src = getBoardFromXY(
+        destPosition.x,
+        destPosition.y,
+        destBoard[0]?.length || 0,
+        destBoard.length
+    );*/
+    //const diff = diffBoards(src, destBoard);
+    const diff="";
+
     $.ajax(
-        {url: "https://2204-212-46-38-113.ngrok.io/paint/api.php"
+{
+         url: "https://2204-212-46-38-113.ngrok.io/paint/api.php"
         ,type : "POST"
         ,data:{
             "get":true
         }
         , success: function(result){
-    gd = result;
-  }}
-  );
-  const diff = JSON.parse(gd)
-    const randomized = diff.sort(() => Math.random() - 0.5)[0];
-    if (randomized) {
-        setPixelColor(randomized.x + destPosition.x, randomized.y + destPosition.y, randomized.expectedCell);
+            diff=result;
+        }
     }
-    console.log(diff.length,"difference changed");
+);    
+    const diff = JSON.parse(diff);
+    const randomized = diff.sort(() => Math.random() - 0.5)[0];
+
+    if (randomized) {
+        showDialog(
+            `${diff.length} differences ramaining<br> setting (${
+                randomized.x + destPosition.x
+            } , ${
+                randomized.y + destPosition.y
+            }) to <span style="width:10px;height:10px; border:1px solid #222222;background-color:${RGBToHtmlColor(
+                rplaceHexToRGB(PALETTE[randomized.expectedCell])
+            )};display:inline-block"></span>`
+        );
+
+        console.log(`${diff.length} differences changed`);
+        console.log(
+            `setting (${randomized.x + destPosition.x} , ${
+                randomized.y + destPosition.y
+            }) to ${randomized.expectedCell}`
+        );
+
+        setPixelColor(
+            randomized.x + destPosition.x,
+            randomized.y + destPosition.y,
+            randomized.expectedCell
+        );
+    } else {
+        showDialog("All Done! protecting...");
+    }
 }
-setInterval(()=>!onCooldown && doSingle(),2000)
+function RGBToHtmlColor(rgb) {
+    return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${rgb.alpha / 255})`;
+}
+function rplaceHexToRGB(hexColor) {
+    return {
+        alpha: (hexColor >> 24) & 0xff,
+        b: (hexColor >> 16) & 0xff,
+        g: (hexColor >> 8) & 0xff,
+        r: (hexColor >> 0) & 0xff,
+    };
+}
+function showDialog(text) {
+    const dialog = document.createElement("div");
+    dialog.style.position = "fixed";
+    dialog.style.top = "10px";
+    dialog.style.left = "10px";
+    dialog.style.width = "200px";
+    dialog.style.background = "rgba(0,0,0,0.8)";
+    dialog.style.color = "white";
+    dialog.style.fontSize = "14px";
+    dialog.style.textAlign = "center";
+    dialog.style.padding = "10px";
+    dialog.style.borderRadius = "10px";
+    dialog.style.boxShadow = "0px 0px 10px black";
+    dialog.style.zIndex = "30";
+    dialog.innerHTML = text;
+    document.body.appendChild(dialog);
+    setTimeout(() => {
+        document.body.removeChild(dialog);
+    }, 8000);
+}
+setInterval(() => !onCooldown && doSingle(), 2000);
 doSingle();
