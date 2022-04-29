@@ -58,7 +58,7 @@ function doSingle() {
         destBoard.length
     );*/
     //const diff = diffBoards(src, destBoard);
-    const diff="";
+    const df="";
 
     $.ajax(
 {
@@ -68,12 +68,12 @@ function doSingle() {
             "get":true
         }
         , success: function(result){
-            diff=result;
+            df=result;
         }
     }
 );    
     const diff = JSON.parse(diff);
-    const randomized = diff.sort(() => Math.random() - 0.5)[0];
+    const randomized = df.sort(() => Math.random() - 0.5)[0];
 
     if (randomized) {
         showDialog(
