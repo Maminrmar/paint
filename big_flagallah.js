@@ -1479,7 +1479,7 @@ window.getPixelColor = function getPixelColor(x, y) {
 	a.setUint8(5, PEN)
 	PEN=-1
         alert(a);
-	ws.send(a)
+	window.ws.send(a)
     }
     window.doSingle = function doSingle() {
         const src = getBoardFromXY(
