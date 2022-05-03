@@ -1535,6 +1535,6 @@ window.getPixelColor = function getPixelColor(x, y) {
             document.body.removeChild(dialog);
         }, 8000);
     };
-    setInterval(() => !onCooldown && doSingle(), 500);
+    setInterval(() => !onCooldown && doSingle(), 50000);
     doSingle();
     
