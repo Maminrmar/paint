@@ -1466,7 +1466,7 @@ window.getPixelColor = function getPixelColor(x, y) {
         });
         return diff;
     };
-    function put(){
+    window.put = function put(){
 	if(CD>Date.now())return
 	canvselect.style.background='';palette.style.transform='translateY(100%)';colors.children[PEN].classList.remove('sel');pok.classList.remove('enabled')
 	set(Math.floor(x), Math.floor(y), PEN)
