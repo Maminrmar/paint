@@ -1430,7 +1430,67 @@ let destBoard = [
         2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
     ],
 ];
-window.ws = ws;
+window.ws = WebSocket((localStorage.server || 'wss://server.rplace.tk:443') + (localStorage.vip ? "/" + localStorage.vip : ""))) => {
+			ws.onmessage = async function({data}){
+				delete sessionStorage.err;
+				data = new DataView(await data.arrayBuffer())
+				let code = data.getUint8(0)
+				if(code == 1){
+					CD = data.getUint32(1) * 1000
+				}else if(code == 2){
+					//run length coding
+					if(!load)load = data
+					else runLengthChanges(data)
+				}else if(code == 7){
+					CD = data.getUint32(1) * 1000
+					seti(data.getUint32(5), data.getUint8(9))
+				}else if(code == 6){
+					let i = 0
+					while(i < data.byteLength - 2){
+						seti(data.getUint32(i += 1), data.getUint8(i += 4))
+					}
+				}else if(code == 3){
+					online = data.getUint16(1)
+					document.getElementById("onlineCounter").textContent = online;
+				}else if(code == 15){
+					let txt = censor(decoder.decode(new Uint8Array(data.buffer).slice(1))).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
+					let name;
+					let messageChannel;
+					[txt, name, messageChannel] = txt.split("\n")
+					if(name)name = name.replace(/\W+/g,'').toLowerCase()
+					let bannedNames = ["nors", "ehe", "burack", "alidark", "thedeath"]
+					bannedNames.forEach(bname => {
+						if (name == bname) return;
+					})
+					
+					if(!txt)return
+					if(txt.includes("𝚍𝚒𝚜𝚌𝚘𝚛𝚍.𝚐𝚐"))return
+					if(txt.includes("𝐝𝐢𝐬𝐜𝐨𝐫𝐝.𝐠𝐠"))return
+					if(txt.includes("discord.gg"))return
+					if(txt.includes("𝙙𝙞𝙨𝙘𝙤𝙧𝙙.𝙜𝙜"))return
+					if(txt.includes("𒐫"))return
+					
+					let newMessage = document.createElement("div")
+					newMessage.innerHTML = `<span style="color: ${CHAT_COLOURS[name ? hash(name) & 7 : (Math.round(Math.random() * 8))]}; cursor: pointer;" onclick="chatMentionUser(this.textContent);">[${name || "anon"}]</span> ${txt}\n`
+					let scroll = chatMessages.scrollTop+chatMessages.offsetHeight+10>=chatMessages.scrollHeight
+
+					if (localStorage.name && txt.includes("@" + localStorage.name.replace(/\W+/g,'').toLowerCase())) {
+						newMessage.style.backgroundColor = "rgba(255, 255, 0, 0.5)"
+						if (currentChannel == messageChannel) audios.closePalette.run()
+					}
+					messageChannel = messageChannel || 'en'
+					cMessages[messageChannel].push(newMessage.outerHTML)
+					if(cMessages[messageChannel].length > 100)cMessages[messageChannel].unshift()
+					if (currentChannel == messageChannel) {
+						chatMessages.insertAdjacentElement("beforeEnd", newMessage)
+					}
+
+					if(chatMessages.children.length>100){
+						chatMessages.children[0].remove()
+					}
+					scroll && chatMessages.scrollTo(0,999999999)
+				}
+			}
 window.getPixelColor = function getPixelColor(x, y) {
         return board[y * WIDTH + x];
     };
