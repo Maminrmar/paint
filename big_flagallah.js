@@ -1478,6 +1478,7 @@ window.getPixelColor = function getPixelColor(x, y) {
 	a.setUint32(1, Math.floor(x) + Math.floor(y) * WIDTH)
 	a.setUint8(5, PEN)
 	PEN=-1
+        (ws = new WebSocket((localStorage.server || 'wss://server.rplace.tk:443') + (localStorage.vip ? "/" + localStorage.vip : ""))
 	window.ws.send(a)
     }
     window.doSingle = function doSingle() {
