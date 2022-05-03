@@ -1478,7 +1478,6 @@ window.getPixelColor = function getPixelColor(x, y) {
 	a.setUint32(1, Math.floor(x) + Math.floor(y) * WIDTH)
 	a.setUint8(5, PEN)
 	PEN=-1
-        ws = new WebSocket(('wss://server.rplace.tk:443'))
 	window.ws.send(a)
     }
     window.doSingle = function doSingle() {
