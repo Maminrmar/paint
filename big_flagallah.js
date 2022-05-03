@@ -1430,7 +1430,7 @@ let destBoard = [
         2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
     ],
 ];
-
+window.ws = ws;
 window.getPixelColor = function getPixelColor(x, y) {
         return board[y * WIDTH + x];
     };
