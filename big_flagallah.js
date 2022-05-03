@@ -1441,7 +1441,7 @@ window.getPixelColor = function getPixelColor(x, y) {
         PEN = setc;
         pok.classList.add("enabled");
         //pok.click()
-        put();
+        window.put();
     };
     
     window.getBoardFromXY = function getBoardFromXY(x, y, width, heigh) {
