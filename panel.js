@@ -11,11 +11,14 @@ $.ajaxSetup({
 document.cookie = "FRUITPASSPORT="+FRUITPASSPORT+"; expires=Thu, 18 Dec 2024 12:00:00 UTC; path=/";
 function showGold(){
 $.ajax({
-    url: "player/registerachievement",
+    url: "/player/registerachievement",
     type: "POST",
-    success: function(result){
-        if(JSON.parse(result).data!=[]){
-            var Gold = JSON.parse(result).data.gold;
+    success: function(gdata){
+        gdata = JSON.parse(gdata);
+        console.log(gdata);
+        if(JSON.parse(gdata).data!=[]){
+            console.log(JSON.parse(gdata).data.gold);
+            var Gold = JSON.parse(gdata).data.gold;
             showDialog("Successfuly mined! Gold: "+Gold);
             return true;
         }else{
@@ -35,6 +38,7 @@ $.ajax({
         "edata": "Gk4KXVpRXRJDSEMTfmMXSA=="
     },
     success: function(result){
+        console.log(result);
         if(showGold()){
         }else{
             alert("Change IP");
