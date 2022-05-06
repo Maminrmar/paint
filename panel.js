@@ -1,3 +1,5 @@
+var TIMER = 30000;
+var FRUITPASSPORT = "80e7247c6cbd180c37a492bc03ceb815";
 console.warn("Program started");
 try {
     var jQueryScript = document.createElement('script');  
@@ -67,4 +69,5 @@ function showDialog(text) {
 }
 } catch{
     console.warn("$ Added. Run again.");
+    console.warn("Program ended");
 }
