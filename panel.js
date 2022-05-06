@@ -9,6 +9,22 @@ $.ajaxSetup({
   }
 });
 document.cookie = "FRUITPASSPORT="+FRUITPASSPORT+"; expires=Thu, 18 Dec 2024 12:00:00 UTC; path=/";
+function showGold(){
+$.ajax({
+    url: "player/registerachievement",
+    type: "POST",
+    success: function(result){
+        if(JSON.parse(result).!="Gk4aRVJARhVDSBUIRFUZFwUPAA1HSGllRQ=="){
+            showDialog(result);
+            showGold();
+        }else{
+            alert("Change IP");
+        }
+        
+    }
+});
+
+}
 function send(){
 $.ajax({
     url: "/cards/collectgold",
@@ -17,8 +33,13 @@ $.ajax({
         "edata": "Gk4KXVpRXRJDSEMTfmMXSA=="
     },
     success: function(result){
-        showDialog(result);
-        console.log(result);
+        if(result!="Gk4aRVJARhVDSBUIRFUZFwUPAA1HSGllRQ=="){
+            showDialog(result);
+            showGold();
+        }else{
+            alert("Change IP");
+        }
+        
     }
 });
 }
