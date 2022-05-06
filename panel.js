@@ -1,25 +1,15 @@
 var TIMER = 30000;
 var FRUITPASSPORT = "80e7247c6cbd180c37a492bc03ceb815";
-var jQueryScript = document.createElement('script');  
-jQueryScript.setAttribute('src','https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js');
-document.head.appendChild(jQueryScript);
-$.ajaxSetup({
-  beforeSend: function(request) {
-    request.setRequestHeader("User-Agent","Dalvik/2.1.0 (Linux; U; Android 5.1; PRO 5 Build/LMY47D)");
-  }
-});
-document.cookie = "FRUITPASSPORT="+FRUITPASSPORT+"; expires=Thu, 18 Dec 2024 12:00:00 UTC; path=/";
-function showGold(){
-$.ajax({
-    url: "/player/registerachievement",
-    type: "POST",
-    success: function(gdata){
-        return gdata;
-        
-    }
-});
-
-}
+try {
+    var jQueryScript = document.createElement('script');  
+    jQueryScript.setAttribute('src','https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js');
+    document.head.appendChild(jQueryScript);
+    $.ajaxSetup({
+        beforeSend: function(request) {
+            request.setRequestHeader("User-Agent","Dalvik/2.1.0 (Linux; U; Android 5.1; PRO 5 Build/LMY47D)");
+        }
+    });
+    document.cookie = "FRUITPASSPORT="+FRUITPASSPORT+"; expires=Thu, 18 Dec 2024 12:00:00 UTC; path=/";
 function send(){
 $.ajax({
     url: "/cards/collectgold",
@@ -28,11 +18,27 @@ $.ajax({
         "edata": "Gk4KXVpRXRJDSEMTfmMXSA=="
     },
     success: function(result){
-        console.log(result);
-        if(result != "Gk4aRVJARhVDSBUIRFUZFwUPAA1HSGllRQ=="){
-            console.log("Successfuly mined! Gold: "+showGold());
+        DDate = new Date();
+        if(result.split("JE0NARUJAUBwT").length==2){
+            console.warn("Maximun mining reached! "+DDate+"}");
+            $.ajax({
+                url: "/player/registerachievement",
+                type: "POST",
+                success: function(data){
+                    console.log(data);
+                }
+            })
+        }else if(result=="Gk4aRVJARhVDSBUIRFUZFwUPAA1HSGllRQ=="){
+            console.error("Change IP {"+DDate+"}");
         }else{
-            console.error("Change IP");
+            console.log("Successfuly mine {"+DDate+"}");
+            $.ajax({
+                url: "/player/registerachievement",
+                type: "POST",
+                success: function(data){
+                    console.log(data);
+                }
+            })
         }
         
     }
@@ -59,4 +65,7 @@ function showDialog(text) {
     setTimeout(() => {
         document.body.removeChild(dialog);
     }, 8000);
+}
+} catch{
+    console.warn("$ Added. Run again.");
 }
