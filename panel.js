@@ -14,10 +14,12 @@ $.ajax({
     url: "player/registerachievement",
     type: "POST",
     success: function(result){
-        if(JSON.parse(result).!="Gk4aRVJARhVDSBUIRFUZFwUPAA1HSGllRQ=="){
-            showDialog(result);
-            showGold();
+        if(JSON.parse(result).data!=[]){
+            var Gold = JSON.parse(result).data.gold;
+            showDialog("Successfuly mined! Gold: "+Gold);
+            return true;
         }else{
+            return false;
             alert("Change IP");
         }
         
@@ -33,9 +35,7 @@ $.ajax({
         "edata": "Gk4KXVpRXRJDSEMTfmMXSA=="
     },
     success: function(result){
-        if(result!="Gk4aRVJARhVDSBUIRFUZFwUPAA1HSGllRQ=="){
-            showDialog(result);
-            showGold();
+        if(showGold()){
         }else{
             alert("Change IP");
         }
