@@ -1,6 +1,7 @@
-var TIMER = 30000;
-var FRUITPASSPORT = "80e7247c6cbd180c37a492bc03ceb815";
-console.warn("Program started");
+/* DRNONSAFE @DRNONSAFE @CRAZYCIOWN */
+var TIMER = 30;    /* In seconds Sample: 30*/
+var FRUITPASSPORT = "FRUITPASSPORT";  /* Sample: "Pass" */
+console.warn("DR Program started");
 try {
     var jQueryScript = document.createElement('script');  
     jQueryScript.setAttribute('src','https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js');
@@ -20,7 +21,12 @@ $.ajax({
     },
     success: function(result){
         DDate = new Date();
-        if(result.split("JE0NARUJAUBwT").length==2){
+        if(result.split("Fruitcraft Server").length==2){
+            console.error("ERROR: FRUITPASSPORT is incorrect!");
+            clearInterval(int);
+            console.warn("Program finished.");
+            
+        }else if(result.split("JE0NARUJAUBwT").length==2){
             console.warn("Maximun mining reached! "+DDate+"}");
             $.ajax({
                 url: "/player/registerachievement",
@@ -45,8 +51,13 @@ $.ajax({
     }
 });
 }
-setInterval("send()",TIMER);
-send();
+if(TIMER>=30){
+    int = setInterval("send()",TIMER*1000);
+    send();
+}else{
+    console.error("Time is too low! Must be higher than 30 seconds.");
+    console.warn("Program finished.");
+}
 function showDialog(text) {
     const dialog = document.createElement("div");
     dialog.style.position = "fixed";
@@ -69,5 +80,6 @@ function showDialog(text) {
 }
 } catch{
     console.warn("$ Added. Run again.");
-    console.warn("Program ended");
+    console.warn("Program finished");
 }
+/* DRNONSAFE @DRNONSAFE @CRAZYCIOWN */
