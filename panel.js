@@ -14,17 +14,7 @@ $.ajax({
     url: "/player/registerachievement",
     type: "POST",
     success: function(gdata){
-        gdata = JSON.parse(gdata);
-        console.log(gdata);
-        if(JSON.parse(gdata).data!=[]){
-            console.log(JSON.parse(gdata).data.gold);
-            var Gold = JSON.parse(gdata).data.gold;
-            showDialog("Successfuly mined! Gold: "+Gold);
-            return true;
-        }else{
-            return false;
-            alert("Change IP");
-        }
+        return gdata;
         
     }
 });
@@ -39,9 +29,10 @@ $.ajax({
     },
     success: function(result){
         console.log(result);
-        if(showGold()){
+        if(result != "Gk4aRVJARhVDSBUIRFUZFwUPAA1HSGllRQ=="){
+            console.log("Successfuly mined! Gold: "+showGold());
         }else{
-            alert("Change IP");
+            console.error("Change IP");
         }
         
     }
