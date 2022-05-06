@@ -15,7 +15,8 @@ $.ajax({
         "edata": "Gk4KXVpRXRJDSEMTfmMXSA=="
     },
     success: function(result){
-        showDialog(result)
+        showDialog(result);
+        console.log(result);
     }
 });
 }
