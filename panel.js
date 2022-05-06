@@ -20,7 +20,7 @@ $.ajax({
 });
 }
 setInterval("send()",TIMER);
-
+send();
 function showDialog(text) {
     const dialog = document.createElement("div");
     dialog.style.position = "fixed";
