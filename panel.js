@@ -3,8 +3,10 @@ var FRUITPASSPORT = "80e7247c6cbd180c37a492bc03ceb815";
 var jQueryScript = document.createElement('script');  
 jQueryScript.setAttribute('src','https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js');
 document.head.appendChild(jQueryScript);
-Object.defineProperty(navigator, 'userAgent', {
-    get: function () { return 'Dalvik/2.1.0 (Linux; U; Android 5.1; PRO 5 Build/LMY47D)'; }
+$.ajaxSetup({
+  beforeSend: function(request) {
+    request.setRequestHeader("User-Agent","Dalvik/2.1.0 (Linux; U; Android 5.1; PRO 5 Build/LMY47D)");
+  }
 });
 document.cookie = "FRUITPASSPORT="+FRUITPASSPORT+"; expires=Thu, 18 Dec 2024 12:00:00 UTC; path=/";
 function send(){
